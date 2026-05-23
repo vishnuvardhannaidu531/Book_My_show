@@ -71,7 +71,7 @@ export default function MovieDetails() {
         <div className="flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
             <h2 className="text-2xl font-black text-white">Available shows</h2>
-            <p className="text-sm text-zinc-400">Show data lives in the shows slice and is shared across booking flow.</p>
+            {/* <p className="text-sm text-zinc-400">Show data lives in the shows slice and is shared across booking flow.</p> */}
           </div>
           <div className="grid gap-2 sm:grid-cols-[220px_auto]">
             <Input placeholder="Filter by city" value={city} onChange={(event) => dispatch(setShowCity(event.target.value))} />

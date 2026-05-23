@@ -18,7 +18,7 @@ export default function MovieFilters() {
         <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
         <Input
           className="pl-11"
-          placeholder="Search movies, genres, languages"
+          placeholder="Search movies"
           value={searchTerm}
           onChange={(event) => dispatch(setSearchTerm(event.target.value))}
         />

@@ -18,7 +18,7 @@ export default function MovieGrid({ movies = [], loading = false }) {
   }
 
   if (!movies.length) {
-    return <EmptyState title="No movies found" message="Search another title or clear the active filters." />;
+    return <EmptyState title="No movie found"  />;
   }
 
   return (

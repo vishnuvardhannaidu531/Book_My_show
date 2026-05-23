@@ -8,7 +8,7 @@ export default function TrendingRail({ movies = [] }) {
     <section className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-white">Trending now</h2>
-        <span className="text-sm text-zinc-400">Curated from global movie state</span>
+        {/* <span className="text-sm text-zinc-400">Curated from global movie state</span> */}
       </div>
       <div className="flex gap-4 overflow-x-auto pb-2">
         {movies.map((movie) => (

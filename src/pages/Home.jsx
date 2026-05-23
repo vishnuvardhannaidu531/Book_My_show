@@ -33,7 +33,7 @@ export default function Home() {
           <span className="rounded-full bg-brand/15 px-3 py-1 text-xs font-bold uppercase text-red-100">Now showing</span>
           <h1 className="mt-5 text-4xl font-black tracking-normal text-white sm:text-5xl">Book movie tickets without the chaos.</h1>
           <p className="mt-4 max-w-xl text-base text-zinc-300 sm:text-lg">
-            Browse movies, pick theatres, reserve seats, and complete payment with a state-managed production frontend.
+            {/* Browse movies, pick theatres, reserve seats, and complete payment with a state-managed production frontend. */}
           </p>
           <Button className="mt-6" onClick={() => document.getElementById("movies-section")?.scrollIntoView({ behavior: "smooth" })}>
             <PlayCircle className="h-5 w-5" />
@@ -48,7 +48,7 @@ export default function Home() {
       <section id="movies-section" className="space-y-5">
         <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-black text-white">All movies</h2>
-          <p className="text-sm text-zinc-400">Search and filters operate on Redux movie state, not repeated API calls.</p>
+          {/* <p className="text-sm text-zinc-400">Search and filters operate on Redux movie state, not repeated API calls.</p> */}
         </div>
         <MovieFilters />
         <MovieGrid movies={movies} loading={loading} />

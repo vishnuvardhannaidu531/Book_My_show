@@ -1,6 +1,6 @@
 import { Film } from "lucide-react";
 
-export default function EmptyState({ title = "Nothing here yet", message = "Try changing filters or refreshing." }) {
+export default function EmptyState({ title = "Nothing here yet", message = "" }) {
   return (
     <div className="flex min-h-60 flex-col items-center justify-center rounded-xl border border-dashed border-white/10 bg-white/[0.03] p-8 text-center">
       <Film className="mb-4 h-10 w-10 text-brand" />

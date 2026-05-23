@@ -33,7 +33,7 @@ export default function BookingHistory() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-black text-white">My bookings</h1>
-        <p className="mt-1 text-sm text-zinc-400">Booking history is fetched once into Redux and rendered from selectors.</p>
+        <p className="mt-1 text-sm text-zinc-400"></p>
       </div>
       {error && <ErrorState message={error} onRetry={() => dispatch(fetchUserBookings(user?.id))} />}
       {loading ? (

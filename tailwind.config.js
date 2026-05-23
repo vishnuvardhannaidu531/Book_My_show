@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        surface: "#09090b",
-        panel: "#111114",
-        panelSoft: "#18181b",
+        surface: "#10172a",
+        panel: "#151826",
+        panelSoft: "#1d2133",
         brand: "#e50914",
         brandSoft: "#ff3f4b",
         ink: "#f7f7f8",
