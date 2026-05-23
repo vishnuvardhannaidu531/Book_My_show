@@ -34,7 +34,7 @@ export default function MovieCard({ movie }) {
               <Languages className="h-3 w-3" />
               {movie.language || "English"}
             </span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-brand/20 px-2 py-1 text-red-100">
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-400/15 px-2 py-1 text-amber-100">
               <Star className="h-3 w-3 fill-current" />
               {movie.rating || "New"}
             </span>

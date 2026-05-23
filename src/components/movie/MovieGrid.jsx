@@ -1,6 +1,9 @@
+import { motion } from "framer-motion";
 import EmptyState from "../common/EmptyState";
 import Skeleton from "../ui/Skeleton";
-import MovieCard from "./MovieCard";
+import PremiumMovieCard from "../premium/PremiumMovieCard";
+
+const MotionDiv = motion.div;
 
 export default function MovieGrid({ movies = [], loading = false }) {
   if (loading) {
@@ -18,13 +21,20 @@ export default function MovieGrid({ movies = [], loading = false }) {
   }
 
   if (!movies.length) {
-    return <EmptyState title="No movie found"  />;
+    return <EmptyState title="No movie found" />;
   }
 
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-      {movies.map((movie) => (
-        <MovieCard key={movie.id || movie._id} movie={movie} />
+      {movies.map((movie, idx) => (
+        <MotionDiv
+          key={movie.id || movie._id}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: idx * 0.05, duration: 0.4 }}
+        >
+          <PremiumMovieCard movie={movie} />
+        </MotionDiv>
       ))}
     </div>
   );

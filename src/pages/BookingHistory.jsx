@@ -1,4 +1,5 @@
-import { Calendar, MapPin, ReceiptText, XCircle } from "lucide-react";
+import { Calendar, MapPin, ReceiptText, Ticket, XCircle } from "lucide-react";
+import { motion } from "framer-motion";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +11,8 @@ import { selectAuthUser } from "../features/auth/authSelectors";
 import { cancelBooking, fetchUserBookings } from "../features/bookings/bookingSlice";
 import { selectBookingCancelling, selectBookings, selectBookingsError, selectBookingsLoading } from "../features/bookings/bookingSelectors";
 import { formatCurrency, formatDateTime } from "../utils/formatters";
+
+const MotionArticle = motion.article;
 
 export default function BookingHistory() {
   const dispatch = useDispatch();
@@ -30,21 +33,29 @@ export default function BookingHistory() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
       <div>
-        <h1 className="text-3xl font-black text-white">My bookings</h1>
-        <p className="mt-1 text-sm text-zinc-400"></p>
+        <h1 className="text-3xl font-black text-white">My Bookings</h1>
+        <p className="mt-1 text-sm text-zinc-400">Your confirmed tickets, show details, and cancellation controls.</p>
       </div>
       {error && <ErrorState message={error} onRetry={() => dispatch(fetchUserBookings(user?.id))} />}
       {loading ? (
         <div className="space-y-4">{Array.from({ length: 3 }).map((_, index) => <Skeleton key={index} className="h-44" />)}</div>
       ) : bookings.length ? (
         <div className="grid gap-4">
-          {bookings.map((booking) => (
-            <article key={booking.id || booking._id} className="rounded-xl border border-white/10 bg-panel p-5 shadow-soft">
+          {bookings.map((booking, index) => (
+            <MotionArticle
+              key={booking.id || booking._id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.04 }}
+              className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-soft backdrop-blur-xl"
+            >
               <div className="flex flex-col justify-between gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-center">
                 <div className="flex items-center gap-3">
-                  <ReceiptText className="h-5 w-5 text-brand" />
+                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand/15 text-brand">
+                    <ReceiptText className="h-5 w-5" />
+                  </span>
                   <div>
                     <h2 className="font-bold text-white">{booking.bookingNumber || `Booking #${booking.id}`}</h2>
                     <p className="text-sm text-zinc-400">{booking.show?.movie?.title || "Movie"}</p>
@@ -57,7 +68,7 @@ export default function BookingHistory() {
               <div className="mt-4 grid gap-3 text-sm text-zinc-300 md:grid-cols-2">
                 <span className="flex items-center gap-2"><MapPin className="h-4 w-4 text-brand" />{booking.show?.screen?.theatre?.name || "Theatre"}</span>
                 <span className="flex items-center gap-2"><Calendar className="h-4 w-4 text-brand" />{formatDateTime(booking.show?.startTime)}</span>
-                <span>Seats: {booking.seats?.map((item) => item.seat?.seatNumber || item.seatNumber).join(", ") || "N/A"}</span>
+                <span className="flex items-center gap-2"><Ticket className="h-4 w-4 text-brand" />Seats: {booking.seats?.map((item) => item.seat?.seatNumber || item.seatNumber).join(", ") || "N/A"}</span>
                 <span>Total: <strong className="text-brand">{formatCurrency(booking.totalAmount)}</strong></span>
               </div>
               {booking.status === "CONFIRMED" && (
@@ -66,7 +77,7 @@ export default function BookingHistory() {
                   Cancel booking
                 </Button>
               )}
-            </article>
+            </MotionArticle>
           ))}
         </div>
       ) : (

@@ -1,4 +1,5 @@
-import { CreditCard, ShieldCheck } from "lucide-react";
+import { motion } from "framer-motion";
+import { CreditCard, ShieldCheck, ArrowLeft, Ticket, MapPin, Clock, Users } from "lucide-react";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +15,8 @@ import { clearCheckout } from "../features/seats/seatSlice";
 import { selectCheckoutSeats, selectCheckoutShow, selectSelectedSeatsTotal } from "../features/seats/seatSelectors";
 import { formatCurrency, formatDateTime } from "../utils/formatters";
 import { getSelectedSeatPayload } from "../utils/normalizers";
+
+const MotionDiv = motion.div;
 
 const loadRazorpay = () =>
   new Promise((resolve) => {
@@ -93,7 +96,7 @@ export default function PaymentPage() {
           }),
         );
         if (verifyPayment.fulfilled.match(verifyResult)) {
-          toast.success("Payment successful");
+          toast.success("Payment successful!");
           dispatch(clearCheckout());
           await dispatch(fetchBookingById(createdBooking.id || createdBooking._id));
           navigate("/bookings");
@@ -118,30 +121,175 @@ export default function PaymentPage() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
-      <div className="rounded-2xl border border-white/10 bg-panel p-6 shadow-soft">
-        <div className="flex items-center gap-3">
-          <span className="grid h-11 w-11 place-items-center rounded-lg bg-brand">
-            <CreditCard className="h-5 w-5" />
-          </span>
-          <div>
-            <h1 className="text-2xl font-black text-white">Payment</h1>
-            <p className="text-sm text-zinc-400">Create booking, create Razorpay order, verify payment.</p>
-          </div>
-        </div>
-        <div className="mt-6 space-y-3 rounded-xl bg-white/[0.04] p-4 text-sm text-zinc-300">
-          <p><strong className="text-white">Movie:</strong> {show?.movie?.title || "Selected movie"}</p>
-          <p><strong className="text-white">Theatre:</strong> {show?.screen?.theatre?.name || "Theatre"}</p>
-          <p><strong className="text-white">Show:</strong> {formatDateTime(show?.startTime)}</p>
-          <p><strong className="text-white">Seats:</strong> {seats.length}</p>
-          <p className="text-lg"><strong className="text-white">Total:</strong> <span className="text-brand">{formatCurrency(total)}</span></p>
-        </div>
-        <Button className="mt-6 w-full" disabled={!show || !seats.length} loading={bookingLoading || paymentLoading} onClick={handlePayment}>
-          <ShieldCheck className="h-5 w-5" />
-          Pay securely
+    <div className="mx-auto max-w-7xl space-y-8 px-4 py-8 sm:px-6 lg:px-8">
+      {/* Back Button */}
+      <MotionDiv
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+      >
+        <Button variant="ghost" onClick={() => navigate(-1)} className="border border-white/10">
+          <ArrowLeft className="h-4 w-4" />
+          Back to Seats
         </Button>
+      </MotionDiv>
+
+      <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
+        {/* Main Payment Section */}
+        <MotionDiv
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 shadow-card-hover backdrop-blur-xl"
+        >
+          {/* Header */}
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand to-brandSoft flex items-center justify-center shadow-glow">
+              <CreditCard className="h-7 w-7 text-white" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-black text-white">Secure Payment</h1>
+              <p className="text-sm text-zinc-400 mt-1">Complete your booking securely</p>
+            </div>
+          </div>
+
+          {/* Booking Details */}
+          <div className="space-y-4 mb-8">
+            <h2 className="text-lg font-bold text-white mb-4">Booking Details</h2>
+
+            {/* Movie */}
+            <MotionDiv
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 }}
+              className="glass rounded-xl p-4"
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-xs text-zinc-400 font-semibold uppercase">Movie</p>
+                  <p className="text-lg font-bold text-white mt-1">{show?.movie?.title || "Selected movie"}</p>
+                </div>
+                <Ticket className="h-5 w-5 text-brand flex-shrink-0 mt-1" />
+              </div>
+            </MotionDiv>
+
+            {/* Theatre & Screen */}
+            <div className="grid grid-cols-2 gap-4">
+              <MotionDiv
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.15 }}
+                className="glass rounded-xl p-4"
+              >
+                <div className="flex items-start gap-3">
+                  <MapPin className="h-4 w-4 text-brand flex-shrink-0 mt-1" />
+                  <div>
+                    <p className="text-xs text-zinc-400 font-semibold uppercase">Theatre</p>
+                    <p className="text-sm font-bold text-white mt-1">{show?.screen?.theatre?.name || "Theatre"}</p>
+                  </div>
+                </div>
+              </MotionDiv>
+
+              <MotionDiv
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="glass rounded-xl p-4"
+              >
+                <div className="flex items-start gap-3">
+                  <Clock className="h-4 w-4 text-brand flex-shrink-0 mt-1" />
+                  <div>
+                    <p className="text-xs text-zinc-400 font-semibold uppercase">Show Time</p>
+                    <p className="text-sm font-bold text-white mt-1">{formatDateTime(show?.startTime)}</p>
+                  </div>
+                </div>
+              </MotionDiv>
+            </div>
+
+            {/* Seats */}
+            <MotionDiv
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.25 }}
+              className="glass rounded-xl p-4"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Users className="h-5 w-5 text-brand" />
+                  <div>
+                    <p className="text-xs text-zinc-400 font-semibold uppercase">Selected Seats</p>
+                    <p className="text-lg font-bold text-white mt-1">{seats.length} seats</p>
+                  </div>
+                </div>
+              </div>
+            </MotionDiv>
+          </div>
+
+          {/* Security Info */}
+          <div className="flex items-center gap-2 p-4 rounded-xl bg-green-400/10 border border-green-400/30 mb-8">
+            <ShieldCheck className="h-5 w-5 text-green-400 flex-shrink-0" />
+            <p className="text-sm text-green-300">Your payment is secure and encrypted with 256-bit SSL</p>
+          </div>
+
+          {/* Payment Button */}
+          <MotionDiv
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Button
+              className="w-full py-4 text-base font-semibold gap-2"
+              disabled={!show || !seats.length}
+              loading={bookingLoading || paymentLoading}
+              onClick={handlePayment}
+            >
+              <ShieldCheck className="h-5 w-5" />
+              {bookingLoading || paymentLoading ? "Processing..." : "Proceed to Payment"}
+            </Button>
+          </MotionDiv>
+
+          {/* Reference */}
+          {booking && (
+            <p className="mt-4 text-center text-xs text-zinc-500 border-t border-white/10 pt-4">
+              Booking Reference: <span className="text-zinc-400 font-mono">{booking.bookingNumber || booking.id}</span>
+            </p>
+          )}
+        </MotionDiv>
+
+        {/* Price Summary Sidebar */}
+        <MotionDiv
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="lg:sticky lg:top-20 lg:h-fit"
+        >
+          <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-panel to-panelSoft p-6 shadow-card-hover space-y-6">
+            <h3 className="text-lg font-black text-white">Price Summary</h3>
+
+            <div className="space-y-3 text-sm border-b border-white/10 pb-4">
+              <div className="flex justify-between text-zinc-400">
+                <span>Seats ({seats.length})</span>
+                <span>{formatCurrency(total)}</span>
+              </div>
+              <div className="flex justify-between text-zinc-400">
+                <span>Convenience Fee</span>
+                <span className="text-yellow-400 text-xs">Included</span>
+              </div>
+            </div>
+
+            <div className="glass rounded-xl p-4 space-y-2">
+              <p className="text-xs text-zinc-400 uppercase font-semibold">Total Amount</p>
+              <p className="text-3xl font-black bg-gradient-to-r from-brand to-brandSoft bg-clip-text text-transparent">
+                {formatCurrency(total)}
+              </p>
+            </div>
+
+            <div className="text-xs text-zinc-500 text-center space-y-1">
+              <p>Secure payment gateway</p>
+              <p>Instant confirmation</p>
+              <p>Ticket on email</p>
+            </div>
+          </div>
+        </MotionDiv>
       </div>
-      {booking && <p className="text-center text-sm text-zinc-500">Latest booking reference: {booking.bookingNumber || booking.id}</p>}
     </div>
   );
 }

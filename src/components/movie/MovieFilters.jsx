@@ -13,7 +13,7 @@ export default function MovieFilters() {
   const languages = useSelector(selectLanguages);
 
   return (
-    <div className="grid gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-4 md:grid-cols-[1fr_180px_180px]">
+    <div className="grid gap-3 rounded-2xl border border-white/10 bg-white/[0.05] p-4 shadow-soft backdrop-blur-xl md:grid-cols-[1fr_180px_180px]">
       <div className="relative">
         <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
         <Input
