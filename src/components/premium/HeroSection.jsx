@@ -14,7 +14,7 @@ export default function HeroSection({
   badges = [],
 }) {
   return (
-    <section className="relative min-h-[calc(100vh-64px)] overflow-hidden">
+    <section className="relative min-h-[calc(45vh-64px)] overflow-hidden">
       <MotionDiv
         initial={{ scale: 1.08 }}
         animate={{ scale: 1 }}
@@ -27,7 +27,7 @@ export default function HeroSection({
       <div className="pointer-events-none absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full bg-amber-400/12 blur-3xl" />
       <div className="pointer-events-none absolute bottom-20 right-8 h-64 w-64 rounded-full bg-white/8 blur-3xl" />
 
-      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-64px)] max-w-7xl items-end px-4 pb-16 pt-24 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto flex min-h-[calc(45vh-64px)] max-w-7xl items-start px-4 py-5 sm:px-6 lg:px-8">
         <MotionDiv
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}

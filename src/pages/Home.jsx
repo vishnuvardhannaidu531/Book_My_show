@@ -49,7 +49,7 @@ export default function Home() {
         />
       )}
 
-      <div className="relative mx-auto max-w-7xl space-y-16 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl space-y-10 px-4 py-4 sm:px-6 lg:px-8">
         <div className="pointer-events-none absolute left-0 top-10 h-80 w-80 rounded-full bg-amber-400/10 blur-3xl" />
         <div className="pointer-events-none absolute right-0 top-96 h-80 w-80 rounded-full bg-white/7 blur-3xl" />
 
